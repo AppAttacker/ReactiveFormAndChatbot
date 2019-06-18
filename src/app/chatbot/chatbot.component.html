@@ -1,0 +1,36 @@
+
+  <div class="card shadow position" #chatbot style="width: 20rem; height: 25rem;">
+    
+    <div class="card-body">
+      <span class="div-left">
+      <h5 class="card-title"><b>ChatBot</b></h5>
+      </span>
+      <span class="div-right">
+      <button type="button" class="close" data-dismiss="modal" (click)="closeChatBot()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      </span><br>
+      <hr>
+    </div>
+    
+    <div class="ScrollStyle" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+      <div *ngFor="let msg of messageList; index as i">
+        <!-- <label *ngIf="messageList.length==0" style="background-color: 'rgb(211, 252, 149)'">{{message}}</label> -->
+        <div style="padding-bottom:40px;"><label [className]="(msg.userType=='robot' || i==0)?'robo div-left':'user div-right'"> {{msg.message}} </label></div>
+      </div>
+    </div>
+    <div class="input-group mb-3">
+      <hr>
+      <input type="text" name="msg" class="form-control" [(ngModel)]='message' placeholder="Type your query here.." aria-label="message" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" (click)="sendMsg()">Send</button>
+      </div>
+      <div class="input-group-append">
+          <button [class]="!recognizing?'btn btn-secondary':'btn btn-success'" type="button" (click)="startButton($event)">
+            <i *ngIf="recognizing" class="material-icons">&#xe029;</i>
+            <i *ngIf="!recognizing" class="material-icons">&#xe02b;</i>
+        </button>
+      </div>
+    </div>
+  </div>
+

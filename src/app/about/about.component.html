@@ -1,0 +1,205 @@
+<!-- <div class="col-xl-3 col-md-6 mb-4" _ngcontent-c5="">
+  <div class="card border-left-primary shadow h-100 py-2" _ngcontent-c5="">
+    <div class="card-body" _ngcontent-c5="">
+      <div class="row no-gutters align-items-center" _ngcontent-c5="">
+        <div class="col mr-2" _ngcontent-c5="">
+          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" _ngcontent-c5="">Your Score*</div>
+          <div class="h5 mb-0 font-weight-bold text-gray-800" _ngcontent-c5="">10</div>
+        </div>
+        <div class="col-auto" _ngcontent-c5=""><i class="fas fa-calendar fa-2x text-gray-300" _ngcontent-c5=""></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<form [formGroup]="empForm" (ngSubmit)="saveForm()">
+  <div class="mr-5">
+    <button type="button" class="btn btn-warning mr-1" [disabled]="!empForm.dirty"
+      (click)="resetValues()">Discard</button>
+    <button type="button" class="btn btn-warning mr-1" 
+      (click)="resetAllValues()">Discard All</button>
+    <button type="button" class="btn btn-secondary mr-1" [disabled]="activePage < 2"
+      (click)="setActivePage(-1)">Previous</button>
+    <button type="button" class="btn btn-primary mr-1" [disabled]="activePage > 3"
+      (click)="setActivePage(+1)">Next</button>
+    <button type="submit" [class]="!empForm.valid? 'btn btn-danger':'btn btn-success'"
+      [disabled]="!empForm.valid">Submit</button>
+  </div><br>
+  <ng-container #profilePage *ngIf='activePage==1'>
+    Page - {{activePage}}<br><br>
+    Profile Page<br><br>
+    <div class="form-group">
+      <label>Name</label><br>
+      <input type="text" formControlName="name">
+      <!--display error message if name is not valid-->
+      <small [hidden]="empForm.controls['name'].valid" class="text-danger">
+        Name is required (minimum 5 and maximum 10 characters).
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>E-Mail</label><br>
+      <input type="text" formControlName="email">
+      <!--display error message if name is not valid-->
+      <small [hidden]="empForm.controls['email'].valid" class="text-danger">
+        Enter Valid email id.
+      </small>
+    </div>
+  </ng-container>
+  <ng-container #addressPage *ngIf='activePage==2'>
+    Page - {{activePage}}<br><br>
+    Address Page <br><br>
+    <!-- list of addresses -->
+
+    <table class="table table-hover table-sm table-bordered" formArrayName="addresses">
+      <thead class="thead-light">
+        <tr>
+          <th>Address</th>
+          <th>E-Mail</th>
+          <th>Pin Code</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let address of empForm.controls['addresses'].controls; let i=index" [formGroupName]="i">
+          <td>
+            <input type='text' formControlName="street">
+            <small [hidden]="empForm.controls['addresses'].controls[i].controls.street.valid">
+              Street is required
+            </small>
+          </td>
+          <td>
+            <input type='text' formControlName="email">
+            <small [hidden]="empForm.controls['addresses'].controls[i].controls.email.valid" class="text-danger">
+              Enter Valid email id.
+            </small>
+          </td>
+          <td>
+            <input type='text' formControlName="pincode">
+          </td>
+          <td><small>
+              <a class="btn text-danger" (click)="addRow('address')">+row
+              </a>
+              <a class="btn text-danger" *ngIf="empForm.controls['addresses'].controls.length > 1"
+                (click)="removeRow(i,'address')">delete
+              </a>
+              <a class="btn text-danger" (click)="updateRow(i,'address')">update
+              </a>
+            </small>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- <div formArrayName="addresses">
+      <div *ngFor="let address of empForm.controls['addresses'].controls; let i=index">
+        <div>
+          <span>Address {{i + 1}}</span>
+          <small><a class="btn text-danger" *ngIf="empForm.controls['addresses'].controls.length > 1"
+              (click)="removeRow(i,'proof')">delete
+            </a></small>
+        </div>
+
+        <div [formGroupName]='i'>
+          <div class="form-group">
+            <label>street</label>
+            <input type="text" formControlName="street">
+            
+            <small [hidden]="empForm.controls['addresses'].controls[i].controls.street.valid">
+              Street is required
+            </small>
+          </div>
+          
+          <div class="form-group">
+            <label>E-Mail</label>
+            <input type="text" formControlName="email">
+            
+            <small [hidden]="empForm.controls['addresses'].controls[i].controls.email.valid" class="text-danger">
+              Enter Valid email id.
+            </small>
+          </div>
+
+          
+          <div class="form-group">
+            <label>postcode</label>
+            <input type="text" formControlName="pincode">
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </ng-container>
+  <ng-container #proofPage *ngIf='activePage==3'>
+    Page - {{activePage}}<br><br>
+    Proof Page <br><br>
+
+    <table class="table table-hover table-sm table-bordered" formArrayName="proofs">
+      <thead class="thead-light">
+        <tr>
+          <th>Proof Name</th>
+          <th>Proof Number</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let proof of empForm.controls['proofs'].controls; let i=index" [formGroupName]="i">
+          <td>
+            <input type='text' formControlName="proofName">
+          </td>
+          <td>
+            <input type='text' formControlName="idNumber">
+          </td>
+          <td><small>
+              <a class="btn text-danger" (click)="addRow('proof')">+row
+              </a>
+              <a class="btn text-danger" *ngIf="empForm.controls['proofs'].controls.length > 1"
+                (click)="removeRow(i,'proof')">delete
+              </a>
+              <a class="btn text-danger" (click)="updateRow(i,'proof')">update
+              </a>
+            </small>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <!-- <div formArrayName="proofs">
+      <div *ngFor="let proof of empForm.controls['proofs'].controls; let i=index">
+        <div>
+          <span>Proof {{i + 1}}</span>
+          <small><a class="btn text-danger" *ngIf="empForm.controls['proofs'].controls.length > 1"
+              (click)="removeRow(i,'proof')">delete
+            </a></small>
+        </div>
+        <div [formGroupName]=i>
+          <div class="form-group">
+            <label>Proof Name</label>
+            <input type="text" formControlName="proofName">
+          </div>
+          <div class="form-group">
+            <label>Proof Number</label>
+            <input type="text" formControlName="idNumber">
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </ng-container>
+  <ng-container *ngIf='activePage > 3 || activePage < 1'>
+    Page 1, 2, 3 are active now... <br><br>
+    Page {{activePage}} - under maintainance..<br><br>
+  </ng-container>
+  <br>
+  Form Status:{{empForm.dirty}}
+  <div class="mr-5">
+    <button type="button" class="btn btn-warning mr-1" [disabled]="!empForm.dirty"
+      (click)="resetValues()">Discard</button>
+    <button type="button" class="btn btn-warning mr-1" 
+      (click)="resetAllValues()">Discard All</button>
+    <button type="button" class="btn btn-secondary mr-1" [disabled]="activePage < 2"
+      (click)="setActivePage(-1)">Previous</button>
+    <button type="button" class="btn btn-primary mr-1" [disabled]="activePage > 3"
+      (click)="setActivePage(+1)">Next</button>
+    <button type="submit" [class]="!empForm.valid? 'btn btn-danger':'btn btn-success'"
+      [disabled]="!empForm.valid">Submit</button>
+  </div>
+</form>

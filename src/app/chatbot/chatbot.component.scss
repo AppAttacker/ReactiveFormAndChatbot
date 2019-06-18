@@ -1,0 +1,51 @@
+.shadow {
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #979faf;
+ }
+
+ .position {
+    // background: #2db34a;
+    position: absolute;
+    top: 150px;
+    right: 20px;
+    
+ }
+ .ScrollStyle
+{
+    max-height: 26rem;
+    overflow: scroll;
+    
+}
+::-webkit-scrollbar { 
+   display: none; 
+}
+.div-left{
+   float:left;
+   padding-left:10px;
+ }
+ .div-right{
+   float:right;
+   padding-right:10px;
+   
+ }
+ .robo{
+   background-color: rgb(211, 252, 149);
+   padding: 5px;
+   border-radius: 10px;
+   // margin: 10px;
+ }
+ .user{
+   background-color: rgb(250, 217, 126);
+   padding: 5px;
+   border-radius: 10px;
+   // margin: 10px;
+ }
+ .chatbot
+{
+    overflow: hidden;
+}
+.chatbot-dialog{
+    margin-right: 0;
+    margin-left: 0;
+}

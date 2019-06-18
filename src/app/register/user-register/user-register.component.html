@@ -1,0 +1,22 @@
+<form [formGroup]="profileForm" (ngSubmit)="doSubmit()" >
+  <fieldset class="form-group"><br>
+    <label for="firstname"> First Name:</label><br>
+    <input id="firstname" type="text" formControlName="firstName">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="lastname"> Last Name:</label><br>
+    <input id="lastname" type="text" formControlName="lastName">
+  </fieldset>
+  <fieldset class="form-group">
+    <label for="lastname"> employee Type: </label><br>
+    <select formControlName="jobType">
+      <option disabled>Gvnt</option>
+      <option disabled>Pvt</option>
+      <option disabled>Self</option>
+    </select>
+  </fieldset>
+  <fieldset class="form-group">
+    Form Status:{{profileForm.status}}
+  </fieldset>
+  <button class="btn btn-success" [disabled]="!profileForm.valid" type="submit">Click Here</button>
+</form>
